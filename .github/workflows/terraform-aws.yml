@@ -19,7 +19,6 @@ on:
 jobs:
   terraform_apply:
     name: "Terraform_Apply"
-    if: ${{ github.event.inputs.action == 'Terraform_Apply' }}
     runs-on: ubuntu-latest
 
     env:
@@ -53,7 +52,6 @@ jobs:
 
   terraform_destroy:
     name: "Terraform_Destroy"
-    if: ${{ github.event.inputs.action == 'Terraform_Destroy' }}
     runs-on: ubuntu-latest
 
     steps:
