@@ -25,17 +25,19 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
+    - name: Setup terraform variables
+      id: vars
+      run: |-
+        cat > pipeline.auto.tfvars <<EOF
+        db_username="${{ vars.DB_USERNAME }}" 
+        db_password="${{ vars.DB_PASSWORD }}" 
+        EOF
+
     - name: Terraform init
       run: terraform init
 
     - name: Terraform plan
       run: terraform plan
-      env:
-        db_username: ${{ secrets.DB_USERNAME }}
-        db_password: ${{ secrets.DB_PASSWORD }}
 
     - name: Terraform apply
       run: terraform apply -auto-approve
-      env:
-        db_username: ${{ secrets.DB_USERNAME }}
-        db_password: ${{ secrets.DB_PASSWORD }}
