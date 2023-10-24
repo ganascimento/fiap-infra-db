@@ -1,8 +1,6 @@
-name: "Terraform Deployment"
+name: Terraform Deployment
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
     types: [ "closed" ]
@@ -10,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    env:
-      db_username: ${{ secrets.DB_USERNAME }}
-      db_password: ${{ secrets.DB_PASSWORD }}
 
     steps:
     - name: Checkout code
@@ -36,6 +30,12 @@ jobs:
 
     - name: Terraform plan
       run: terraform plan
+      env:
+        db_username: ${{ secrets.DB_USERNAME }}
+        db_password: ${{ secrets.DB_PASSWORD }}
 
     - name: Terraform apply
       run: terraform apply -auto-approve
+      env:
+        db_username: ${{ secrets.DB_USERNAME }}
+        db_password: ${{ secrets.DB_PASSWORD }}
